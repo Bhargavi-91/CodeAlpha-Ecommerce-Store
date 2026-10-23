@@ -1,0 +1,17 @@
+{% extends "store/base.html" %}
+{% block title %}Your cart | BrightCart{% endblock %}
+{% block content %}
+<h1>Your shopping cart</h1>
+{% if rows %}
+<div class="cart-list">
+{% for row in rows %}
+<div class="cart-row"><div class="cart-product"><h3>{{ row.product.name }}</h3><p>₹{{ row.product.price }} each</p></div>
+<form class="quantity-form" method="post" action="{% url 'update_cart' row.product.id %}">{% csrf_token %}<label>Qty <input type="number" name="quantity" min="0" max="{{ row.product.stock }}" value="{{ row.quantity }}"></label><button class="button button-light" type="submit">Update</button></form>
+<strong>₹{{ row.line_total }}</strong>
+<form method="post" action="{% url 'remove_from_cart' row.product.id %}">{% csrf_token %}<button class="text-danger" type="submit">Remove</button></form></div>
+{% endfor %}
+</div>
+<div class="cart-summary"><span>Total</span><strong>₹{{ total }}</strong></div>
+<div class="actions"><a class="button button-light" href="{% url 'home' %}">Continue shopping</a><a class="button" href="{% url 'checkout' %}">Proceed to checkout</a></div>
+{% else %}<div class="empty-state"><h2>Your cart is empty</h2><p>Add a product to see it here.</p><a class="button" href="{% url 'home' %}">Explore products</a></div>{% endif %}
+{% endblock %}

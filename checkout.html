@@ -1,0 +1,10 @@
+{% extends "store/base.html" %}
+{% block title %}Checkout | BrightCart{% endblock %}
+{% block content %}
+<h1>Checkout</h1><p>Enter your delivery details to place your demo order.</p>
+<div class="checkout-layout"><form class="form-card" method="post">{% csrf_token %}
+  {% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.errors %}<small class="error">{{ field.errors|striptags }}</small>{% endif %}</div>{% endfor %}
+  <button class="button" type="submit">Place order</button>
+</form>
+<aside class="order-summary"><h2>Order summary</h2>{% for row in rows %}<p>{{ row.product.name }} × {{ row.quantity }} <strong>₹{{ row.line_total }}</strong></p>{% endfor %}<hr><p class="summary-total">Total <strong>₹{{ total }}</strong></p><small>No real payment is collected in this student demo.</small></aside></div>
+{% endblock %}

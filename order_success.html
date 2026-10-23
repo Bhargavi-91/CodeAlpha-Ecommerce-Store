@@ -1,0 +1,5 @@
+{% extends "store/base.html" %}
+{% block title %}Order placed | BrightCart{% endblock %}
+{% block content %}
+<div class="success-card"><div class="success-icon">✓</div><p class="eyebrow">ORDER CONFIRMED</p><h1>Thank you, {{ order.full_name }}!</h1><p>Your demo order <strong>#{{ order.id }}</strong> has been placed.</p><p>Total: <strong>₹{{ order.total }}</strong></p><p>Status: {{ order.get_status_display }}</p><a class="button" href="{% url 'my_orders' %}">View my orders</a></div>
+{% endblock %}

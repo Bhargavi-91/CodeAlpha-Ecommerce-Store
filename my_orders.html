@@ -1,0 +1,6 @@
+{% extends "store/base.html" %}
+{% block title %}My orders | BrightCart{% endblock %}
+{% block content %}
+<h1>My orders</h1>
+{% if orders %}<div class="orders-list">{% for order in orders %}<article class="order-card"><div class="order-header"><h2>Order #{{ order.id }}</h2><span class="status">{{ order.get_status_display }}</span></div><p>{{ order.created_at|date:"d M Y, H:i" }} · Total <strong>₹{{ order.total }}</strong></p><ul>{% for item in order.items.all %}<li>{{ item.product.name }} × {{ item.quantity }} — ₹{{ item.price_at_purchase }}</li>{% endfor %}</ul><p class="muted">Delivery to: {{ order.full_name }}, {{ order.address }}</p></article>{% endfor %}</div>{% else %}<div class="empty-state"><h2>No orders yet</h2><a class="button" href="{% url 'home' %}">Start shopping</a></div>{% endif %}
+{% endblock %}

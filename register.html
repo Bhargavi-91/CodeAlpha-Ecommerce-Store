@@ -1,0 +1,7 @@
+{% extends "store/base.html" %}
+{% block title %}Create account | BrightCart{% endblock %}
+{% block content %}
+<div class="form-wrap"><h1>Create an account</h1><p>Join BrightCart to place and track demo orders.</p><form class="form-card" method="post">{% csrf_token %}
+{% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{% if field.help_text %}<small>{{ field.help_text|safe }}</small>{% endif %}{% if field.errors %}<small class="error">{{ field.errors|striptags }}</small>{% endif %}</div>{% endfor %}
+<button class="button" type="submit">Create account</button></form><p>Already registered? <a href="{% url 'login' %}">Log in</a></p></div>
+{% endblock %}

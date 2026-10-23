@@ -1,0 +1,32 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}BrightCart{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="{% url 'home' %}">BrightCart</a>
+  <nav>
+    <a href="{% url 'home' %}">Shop</a>
+    <a href="{% url 'cart' %}">Cart</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'my_orders' %}">My orders</a>
+      <span class="welcome">Hi, {{ user.username }}</span>
+      <form class="nav-form" method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="link-button" type="submit">Log out</button></form>
+    {% else %}
+      <a href="{% url 'login' %}">Log in</a>
+      <a href="{% url 'register' %}">Create account</a>
+    {% endif %}
+  </nav>
+</header>
+<main class="container">
+  {% if messages %}<div class="messages">{% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}</div>{% endif %}
+  {% block content %}{% endblock %}
+</main>
+<footer class="footer">BrightCart · Demo e-commerce project</footer>
+</body>
+</html>

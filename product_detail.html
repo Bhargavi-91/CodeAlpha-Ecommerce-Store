@@ -1,0 +1,10 @@
+{% extends "store/base.html" %}
+{% block title %}{{ product.name }} | BrightCart{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'home' %}">← Back to shop</a>
+<div class="detail-layout">
+  {% if product.image_url %}<img class="detail-image" src="{{ product.image_url }}" alt="{{ product.name }}">{% else %}<div class="detail-placeholder">🛍️</div>{% endif %}
+  <div><p class="eyebrow">PRODUCT DETAILS</p><h1>{{ product.name }}</h1><p class="detail-price">₹{{ product.price }}</p><p>{{ product.description }}</p><p class="stock">Available stock: {{ product.stock }}</p>
+  <form method="post" action="{% url 'add_to_cart' product.id %}">{% csrf_token %}<button class="button" type="submit" {% if not product.stock %}disabled{% endif %}>Add to cart</button></form></div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "store/base.html" %}
+{% block title %}Shop | BrightCart{% endblock %}
+{% block content %}
+<section class="hero"><p class="eyebrow">WELCOME TO BRIGHTCART</p><h1>Little things. Better days.</h1><p>Discover useful everyday products at friendly prices.</p></section>
+<div class="section-heading"><h2>Shop products</h2><span>{{ products|length }} item(s)</span></div>
+{% if products %}
+<div class="product-grid">
+  {% for product in products %}
+  <article class="product-card">
+    {% if product.image_url %}<img class="product-image" src="{{ product.image_url }}" alt="{{ product.name }}">{% else %}<div class="product-placeholder">🛍️</div>{% endif %}
+    <div class="product-info"><h3><a href="{% url 'product_detail' product.id %}">{{ product.name }}</a></h3><p class="description">{{ product.description|truncatewords:16 }}</p><div class="product-bottom"><strong>₹{{ product.price }}</strong><span class="stock">{% if product.stock %}In stock{% else %}Out of stock{% endif %}</span></div>
+    <form method="post" action="{% url 'add_to_cart' product.id %}">{% csrf_token %}<button class="button" type="submit" {% if not product.stock %}disabled{% endif %}>Add to cart</button></form></div>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty-state"><h2>Your store is ready!</h2><p>Add your first products through the Django admin page.</p><p>Visit <code>/admin/</code> after creating a superuser.</p></div>
+{% endif %}
+{% endblock %}
